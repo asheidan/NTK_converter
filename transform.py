@@ -204,6 +204,7 @@ if __name__ == '__main__': #{{{1
 	
 	if not os.access(filename, os.R_OK):
 		print >> sys.stderr, "%s is not a readable file" % filename
+		sys.exit(-1)
 	
 	# Input is most likely utf-16le but let the codex deal with BOM and such
 	reader = UnicodeReader(open(filename,'rb'), dialect=input_dialect, encoding=input_encoding)
