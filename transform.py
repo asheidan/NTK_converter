@@ -92,20 +92,12 @@ class Entry: #{{{1
 	
 	REQUIRED_FIELDS = []
 
-	def __init__(self,fields=None): #{{{2
-		self._data = {}
-		if None != fields:
-			self.ssn       = fields[self.FIELD_ORDER_DICT["ssn"]]
-			self.firstname = fields[self.FIELD_ORDER_DICT["firstname"]]
-			self.lastname  = fields[self.FIELD_ORDER_DICT["lastname"]]
-			self.co        = fields[self.FIELD_ORDER_DICT["co"]]
-			self.address   = fields[self.FIELD_ORDER_DICT["address"]]
-			self.zip_code  = fields[self.FIELD_ORDER_DICT["zip_code"]]
-			self.city      = fields[self.FIELD_ORDER_DICT["city"]]
-			self.country   = fields[self.FIELD_ORDER_DICT["country"]]
-			self.phone     = fields[self.FIELD_ORDER_DICT["phone"]]
-			self.email     = fields[self.FIELD_ORDER_DICT["email"]]
-			self.program   = fields[self.FIELD_ORDER_DICT["program"]]
+	def __init__(self,*args,**kwargs): #{{{2
+		if 0 < len(args):
+			for key in self.FIELD_ORDER_DICT.iterkeys():
+				self.__setattr__(key, args[self.FIELD_ORDER_DICT[ key ]])
+		for key in kwargs.iterkeys():
+			self.__setattr__(key, args[self.FIELD_ORDER_DICT[ key ]])
 
 	def __setattr__(self, name, value): #{{{2
 		if name in self.UPPER_FIELDS:
@@ -234,11 +226,10 @@ if __name__ == '__main__': #{{{1
 	entry_count = 0
 	# Comence!
 	for row in reader:
-		e = Entry(row)
+		e = Entry(*row)
 		writer.writerow( e.as_array() )
 		entry_count += 1
 	
 	output.close()
 	print >> sys.stderr, '"Successfully" converted %d entries...' % entry_count
-
 
