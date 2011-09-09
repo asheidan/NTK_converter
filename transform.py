@@ -43,7 +43,7 @@ output_dialect = 'ladok'
 """
 Output qouting. The default is 'ALL' which adds "" around all fields.
 """
-output_quoting = 'ALL'
+output_quoting = 'MINIMAL'
 
 
 # The script, you probably don't want to edit below this line ################
