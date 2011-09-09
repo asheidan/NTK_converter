@@ -38,7 +38,7 @@ output_encoding = 'latin-1'
 """
 Output dialect. The CSV-dialect of the output file.
 """
-output_dialect = 'excel-tab'
+output_dialect = 'ladok'
 
 """
 Output qouting. The default is 'ALL' which adds "" around all fields.
@@ -60,6 +60,12 @@ def _handle_zip(value): #{{{2
 	"""Extracts tha last 5 digits"""
 	return re.sub(r"[^\d]","", value)[-5:]
 
+# Ladok csv-dialect {{{1
+csv.register_dialect("ladok",
+		delimiter = "\t",
+		doublequote = False,
+		lineterminator = "\n"
+	)
 class Entry: #{{{1
 	"""Represents an entry in a datafile"""
 	FIELD_ORDER_DICT = { #{{{2
